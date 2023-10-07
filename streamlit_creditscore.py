@@ -19,8 +19,8 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-scaler = joblib.load('/content/sample_data/credit_scaler.pkl')
-model = open('/content/sample_data/credit_model.pkl', 'rb')
+scaler = joblib.load('credit_scaler.pkl')
+model = open('credit_model.pkl', 'rb')
 
 # Transform Input columns
 def transform_resp(resp):
