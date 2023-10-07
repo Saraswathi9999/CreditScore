@@ -125,8 +125,8 @@ def transform_resp(resp):
         'Payday_Loan': loans['Payday Loan'],
         'Missed_Payment_Day': yes_no('missed_payment'),
         'Payment_of_Min_Amount_Yes': yes_no('minimum_payment'),
-        'High_spent_Medium_value_payments':payment_behaviour['High_spent_Medium_value_payments'],
-        'High_spent_Small_value_payments':payment_behaviour['High_spent_Small_value_payments'],
+        'High_spent_Medium_value_payments': payment_behaviour['High_spent_Medium_value_payments'],
+        'High_spent_Small_value_payments': payment_behaviour['High_spent_Small_value_payments'],
         'Low_spent_Large_value_payments': payment_behaviour['Low_spent_Large_value_payments'],
         'Low_spent_Medium_value_payments': payment_behavior['Low_spent_Medium_value_payments'],
         'Low_spent_Small_value_payments': payment_behavior['Low_spent_Small_value_payments'],
@@ -183,9 +183,9 @@ with st.sidebar:
     loans = st.multiselect('Which loans do you have?', ['Auto Loan', 'Credit-Builder Loan', 'Personal Loan',
                                                 'Home Equity Loan', 'Mortgage Loan', 'Student Loan',
                                                 'Debt Consolidation Loan', 'Payday Loan'], default=loans_default)
-    payment_behaviour = st.multiselect('What is your Payment_Behaviour?', ['High_spent_Small_value_payments', 'Credit-Builder Loan',
+    payment_behaviour = st.multiselect('What is your Payment_Behaviour?', ['High_spent_Medium_value_payments','High_spent_Small_value_payments',
                                                 'Low_spent_Large_value_payments', 'Low_spent_Medium_value_payments',
-                                                'spent_Small_value_payments', ], default=payment_behaviour_default)
+                                                'Low_spent_Small_value_payments'], default=payment_behaviour_default)
 
     occupation = st.selectbox('What is your Occupation?', ['Doctor','Engineer', 'Entrepreneur', 'Journalist', 'Lawyer', 'Manager', 'Mechanic', 'Media_Manager', 'Musician', 'Scientist', 'Teacher', 'Writer'])
 
