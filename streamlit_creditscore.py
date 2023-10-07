@@ -128,8 +128,8 @@ def transform_resp(resp):
         'High_spent_Medium_value_payments': payment_behaviour['High_spent_Medium_value_payments'],
         'High_spent_Small_value_payments': payment_behaviour['High_spent_Small_value_payments'],
         'Low_spent_Large_value_payments': payment_behaviour['Low_spent_Large_value_payments'],
-        'Low_spent_Medium_value_payments': payment_behavior['Low_spent_Medium_value_payments'],
-        'Low_spent_Small_value_payments': payment_behavior['Low_spent_Small_value_payments'],
+        'Low_spent_Medium_value_payments': payment_behaviour['Low_spent_Medium_value_payments'],
+        'Low_spent_Small_value_payments': payment_behaviour['Low_spent_Small_value_payments'],
         'Doctor': occupation['Doctor'],
         'Engineer': occupation['Engineer'],
         'Entrepreneur': occupation['Entrepreneur'],
@@ -239,7 +239,7 @@ with col1:
             'loans': loans,
             'missed_payment': missed_payment,
             'minimum_payment': minimum_payment,
-            'payment_behaviour':payment_behaviour,
+            'payment_behaviour': payment_behaviour,
             'occupation':occupation
         }
         output = transform_resp(resp)
