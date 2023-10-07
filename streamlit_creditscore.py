@@ -7,11 +7,12 @@ Original file is located at
     https://colab.research.google.com/drive/1if0ilLf9_pc_rAijgKb12EpkqTohGUXN
 """
 
+pip install streamlit
+
 import streamlit as st
 import pickle
 import pandas as pd
 import joblib
-from zipfile import ZipFile
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -29,7 +30,7 @@ def transform_resp(resp):
             return 1
         else:
             return 0
-# LOANS TYPES COMBINING
+# LOANS TYPES
     loans = {
         'Auto Loan': 0,
         'Credit-Builder Loan': 0,
@@ -76,31 +77,31 @@ def transform_resp(resp):
                 payment_behaviour[key_ans] = 1
 # OCCUPATION:
     occupation = {
-        'Doctor': occupation['Doctor'],
-        'Engineer': occupation['Engineer'],
-        'Entrepreneur': occupation['Entrepreneur'],
-        'Journalist': occupation['Journalist'],
-        'Lawyer': occupation['Lawyer'],
-        'Manager': occupation['Manager'],
-        'Mechanic': occupation['Mechanic'],
-        'Media_Manager': occupation['Media_Manager'],
-        'Musician': occupation['Musician'],
-        'Scientist': occupation['Scientist'],
-        'Teacher': occupation['Teacher'],
-        'Writer': occupation['Writer']
+        'Doctor': None,
+        'Engineer': None,
+        'Entrepreneur': None,
+        'Journalist': None,
+        'Lawyer': None,
+        'Manager': None,
+        'Mechanic': None,
+        'Media_Manager': None,
+        'Musician': None,
+        'Scientist': None,
+        'Teacher': None,
+        'Writer': None
     }
 
     if resp['occupation'] == None:
-        occupation['Doctor'] = 0
-        occupation['Engineer'] = 0
-        occupation['Entrepreneur'] = 0
-        occupation['Journalist'] = 0
-        occupation['Lawyer'] = 0
-        occupation['Manager'] = 0
-        occupation['Musician'] = 0
-        occupation['Scientist'] = 0
-        occupation['Teacher'] = 0
-        occupation['Writer'] = 0
+        occupation['Doctor'] = None
+        occupation['Engineer'] = None
+        occupation['Entrepreneur'] = None
+        occupation['Journalist'] = None
+        occupation['Lawyer'] = None
+        occupation['Manager'] = None
+        occupation['Musician'] = None
+        occupation['Scientist'] = None
+        occupation['Teacher'] = None
+        occupation['Writer'] = None
     else:
         for key_ans in occupation.keys():
             if key_ans in resp['occupation']:
@@ -216,7 +217,7 @@ with col2:
     p3.tick_params(bottom=False, left=False)
 
     plt.text(0.7, 1.05, "POOR", horizontalalignment='left', size='medium', color='white', weight='semibold')
-    plt.text(2.5, 1.05, "REGULAR", horizontalalignment='left', size='medium', color='white', weight='semibold')
+    plt.text(2.5, 1.05, "STANDARD", horizontalalignment='left', size='medium', color='white', weight='semibold')
     plt.text(4.7, 1.05, "GOOD", horizontalalignment='left', size='medium', color='white', weight='semibold')
 
     ax.set(xlim=(0, 6))
