@@ -102,9 +102,9 @@ def transform_resp(resp):
         occupation['Teacher'] = 0
         occupation['Writer'] = 0
     else:
-        for key_ans in loans.keys():
-            if key_ans in resp['payment_behaviour']:
-                payment_behaviour[key_ans] = 1
+        for key_ans in occupation.keys():
+            if key_ans in resp['occupation']:
+                occupation[key_ans] = 1
 
 # COLUMNS
     output = {
@@ -166,7 +166,6 @@ loans_default = None
 missed_payment_default = 0
 minimum_payment_default = 0
 payment_behaviour_default = None
-occupation_defualt = None
 month_default = None
 
 st.title('Credit Score Analysis')
