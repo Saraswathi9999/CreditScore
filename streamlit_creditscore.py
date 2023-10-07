@@ -189,7 +189,7 @@ with st.sidebar:
                                                 'Low_spent_Large_value_payments', 'Low_spent_Medium_value_payments',
                                                 'spent_Small_value_payments', ], default=payment_behaviour_default)
 
-    occupation = st.checkbox('What is your Occupation?', ['Doctor','Engineer', 'Entrepreneur', 'Journalist', 'Lawyer', 'Manager', 'Mechanic', 'Media_Manager', 'Musician', 'Scientist', 'Teacher', 'Writer'])
+    occupation = st.selectbox('What is your Occupation?', ['Doctor','Engineer', 'Entrepreneur', 'Journalist', 'Lawyer', 'Manager', 'Mechanic', 'Media_Manager', 'Musician', 'Scientist', 'Teacher', 'Writer'])
 
     missed_payment = st.radio('Have you missed any payments in the last 12 months?', ['Yes', 'No'], index=missed_payment_default)
     minimum_payment = st.radio('Have you paid the minimum amount on at least one of your credit cards?', ['Yes', 'No'], index=minimum_payment_default)
