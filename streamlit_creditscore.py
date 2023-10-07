@@ -19,9 +19,8 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-scaler = joblib.load('credit_scaler.pkl')
-#model = pickle.load('/content/sample_data/credit_scaler.pkl')
-model = open('credit_scaler.pkl', 'rb')
+scaler = joblib.load('/content/sample_data/credit_scaler.pkl')
+model = open('/content/sample_data/credit_model.pkl', 'rb')
 
 # Transform Input columns
 def transform_resp(resp):
@@ -75,7 +74,37 @@ def transform_resp(resp):
         for key_ans in loans.keys():
             if key_ans in resp['payment_behaviour']:
                 payment_behaviour[key_ans] = 1
+# OCCUPATION:
+    occupation = {
+        'Doctor': occupation['Doctor'],
+        'Engineer': occupation['Engineer'],
+        'Entrepreneur': occupation['Entrepreneur'],
+        'Journalist': occupation['Journalist'],
+        'Lawyer': occupation['Lawyer'],
+        'Manager': occupation['Manager'],
+        'Mechanic': occupation['Mechanic'],
+        'Media_Manager': occupation['Media_Manager'],
+        'Musician': occupation['Musician'],
+        'Scientist': occupation['Scientist'],
+        'Teacher': occupation['Teacher'],
+        'Writer': occupation['Writer']
+    }
 
+    if resp['occupation'] == None:
+        occupation['Doctor'] = 0
+        occupation['Engineer'] = 0
+        occupation['Entrepreneur'] = 0
+        occupation['Journalist'] = 0
+        occupation['Lawyer'] = 0
+        occupation['Manager'] = 0
+        occupation['Musician'] = 0
+        occupation['Scientist'] = 0
+        occupation['Teacher'] = 0
+        occupation['Writer'] = 0
+    else:
+        for key_ans in loans.keys():
+            if key_ans in resp['payment_behaviour']:
+                payment_behaviour[key_ans] = 1
 
 # COLUMNS
     output = {
@@ -96,7 +125,25 @@ def transform_resp(resp):
         'Debt_Consolidation_Loan': loans['Debt Consolidation Loan'],
         'Payday_Loan': loans['Payday Loan'],
         'Missed_Payment_Day': yes_no('missed_payment'),
-        'Payment_of_Min_Amount_Yes': yes_no('minimum_payment')
+        'Payment_of_Min_Amount_Yes': yes_no('minimum_payment'),
+        'High_spent_Medium_value_payments':payment_behaviour['High_spent_Medium_value_payments'],
+        'High_spent_Small_value_payments':payment_behaviour['High_spent_Small_value_payments'],
+        'Low_spent_Large_value_payments': payment_behaviour['Low_spent_Large_value_payments'],
+        'Low_spent_Medium_value_payments': payment_behavior['Low_spent_Medium_value_payments'],
+        'Low_spent_Small_value_payments': payment_behavior['Low_spent_Small_value_payments'],
+        'Doctor': occupation['Doctor'],
+        'Engineer': occupation['Engineer'],
+        'Entrepreneur': occupation['Entrepreneur'],
+        'Journalist': occupation['Journalist'],
+        'Lawyer': occupation['Lawyer'],
+        'Manager': occupation['Manager'],
+        'Mechanic': occupation['Mechanic'],
+        'Media_Manager': occupation['Media_Manager'],
+        'Musician': occupation['Musician'],
+        'Scientist': occupation['Scientist'],
+        'Teacher': occupation['Teacher'],
+        'Writer': occupation['Writer']
+
     }
 
     return output
@@ -119,6 +166,8 @@ loans_default = None
 missed_payment_default = 0
 minimum_payment_default = 0
 payment_behaviour_default = None
+occupation_defualt = None
+month_default = None
 
 st.title('Credit Score Analysis')
 
@@ -139,6 +188,8 @@ with st.sidebar:
     payment_behaviour = st.multiselect('What is your Payment_Behaviour?', ['High_spent_Small_value_payments', 'Credit-Builder Loan',
                                                 'Low_spent_Large_value_payments', 'Low_spent_Medium_value_payments',
                                                 'spent_Small_value_payments', ], default=payment_behaviour_default)
+
+    occupation = st.checkbox('What is your Occupation?', ['Doctor','Engineer', 'Entrepreneur', 'Journalist', 'Lawyer', 'Manager', 'Mechanic', 'Media_Manager', 'Musician', 'Scientist', 'Teacher', 'Writer'])
 
     missed_payment = st.radio('Have you missed any payments in the last 12 months?', ['Yes', 'No'], index=missed_payment_default)
     minimum_payment = st.radio('Have you paid the minimum amount on at least one of your credit cards?', ['Yes', 'No'], index=minimum_payment_default)
@@ -190,7 +241,8 @@ with col1:
             'loans': loans,
             'missed_payment': missed_payment,
             'minimum_payment': minimum_payment,
-            'payment_behaviour':payment_behaviour
+            'payment_behaviour':payment_behaviour,
+            'occupation':occupation
         }
         output = transform_resp(resp)
         output = pd.DataFrame(output, index=[0])
