@@ -41,40 +41,42 @@ def transform_resp(resp):
     }
 
     if resp['loans'] == None:
-        loans['Auto Loan'] = 0
         loans['Credit-Builder Loan'] = 0
         loans['Personal Loan'] = 0
-        loans['Home Equity Loan'] = 0
-        loans['Mortgage Loan'] = 0
-        loans['Student Loan'] = 0
         loans['Debt Consolidation Loan'] = 0
+        loans['Student Loan'] = 0
         loans['Payday Loan'] = 0
+        loans['Mortgage Loan'] = 0
+        loans['Auto Loan'] = 0
+        loans['Home Equity Loan'] = 0
     else:
         for key_ans in loans.keys():
             if key_ans in resp['loans']:
                 loans[key_ans] = 1
 
-# PAYMENT BEHAVIOUR
-    payment_behaviour = {
-        'High_spent_Medium_value_payments': 0,
-        'High_spent_Small_value_payments': 0,
-        'Low_spent_Large_value_payments': 0,
-        'Low_spent_Medium_value_payments': 0,
-        'Low_spent_Small_value_payments': 0,
+# CREDIT MIX:
 
-    }
-    if resp['payment_behaviour'] == None:
-        payment_behaviour['High_spent_Medium_value_payments'] = 0
-        payment_behaviour['High_spent_Small_value_payments'] = 0
-        payment_behaviour['Low_spent_Large_value_payments'] = 0
-        payment_behaviour['Low_spent_Medium_value_payments'] = 0
-        payment_behaviour['Low_spent_Small_value_payments'] = 0
+    credit_mix = {
+        'Good': 0,
+        'Standard': 0,
+        'Bad': 0,
+                 }
+
+    if resp['credit_mix'] == None:
+        credit_mix['Good'] = 0
+        credit_mix['Standard'] = 0
+        credit_mix['Bad'] = 0
+
     else:
-        for key_ans in loans.keys():
-            if key_ans in resp['payment_behaviour']:
-                payment_behaviour[key_ans] = 1
+        for key_ans in credit_mix.keys():
+            if key_ans in resp['credit_mix']:
+                credit_mix[key_ans] = 1
+
+
 # OCCUPATION:
     occupation = {
+        'Architect': None,
+        'Developer' : None,
         'Doctor': None,
         'Engineer': None,
         'Entrepreneur': None,
@@ -90,12 +92,16 @@ def transform_resp(resp):
     }
 
     if resp['occupation'] == None:
+        occupation['Architect'] = None
+        occupation['Developer'] = None
         occupation['Doctor'] = None
         occupation['Engineer'] = None
         occupation['Entrepreneur'] = None
         occupation['Journalist'] = None
         occupation['Lawyer'] = None
         occupation['Manager'] = None
+        occupation['Mechanic'] = None
+        occupation['Media_Manager'] = None
         occupation['Musician'] = None
         occupation['Scientist'] = None
         occupation['Teacher'] = None
@@ -109,39 +115,44 @@ def transform_resp(resp):
     output = {
         'Age': resp['age'],
         'Annual_Income': resp['annual_income'],
+        'Monthly_Inhand_Salary':resp['monthly_inhand_salary'],
         'Num_Bank_Accounts': resp['accounts'],
         'Num_Credit_Card': resp['credit_cards'],
+        'Interest_Rate': resp['changed_credit_limit'],
+        'Num_of_Loan': resp['noof_loans'],
         'Num_of_Delayed_Payment': resp['delayed_payments'],
+        'Changed_Credit_Limit': resp['changed_credit_limit'],
+        'Num_Credit_Inquiries': resp['num_credit_inquiries'],
+        'Credit_Mix': resp['credit_mix'],
+        'Outstanding_Debt': resp['outstanding_debt'],
         'Credit_Utilization_Ratio': resp['credit_card_ratio'],
+        'Credit_History_Age': resp['credit_history'],
         'Total_EMI_per_month': resp['emi_monthly'],
-        'Credit_History_Age_Formated': resp['credit_history'],
-        'Auto_Loan': loans['Auto Loan'],
+        'Amount_invested_monthly': resp['amount_invested_monthly'],
+        'Monthly_Balance': resp['monthly_balance'],
         'Credit-Builder_Loan': loans['Credit-Builder Loan'],
-        'Personal_Loan': loans['Personal Loan'],
-        'Home_Equity_Loan': loans['Home Equity Loan'],
-        'Mortgage_Loan': loans['Mortgage Loan'],
-        'Student_Loan': loans['Student Loan'],
-        'Debt_Consolidation_Loan': loans['Debt Consolidation Loan'],
-        'Payday_Loan': loans['Payday Loan'],
-        'Missed_Payment_Day': yes_no('missed_payment'),
+        'Personal Loan': loans['Personal Loan'],
+        'Debt Consolidation Loan': loans['Debt Consolidation Loan'],
+        'Student Loan': loans['Student Loan'],
+        'Payday Loan': loans['Payday Loan'],
+        'Mortgage Loan': loans['Mortgage Loan'],
+        'Auto Loan': loans['Auto Loan'],
+        'Home Equity Loan': loans['Home Equity Loan'],
+        'Occupation_Architect': occupation['Architect'],
+        'Occupation_Developer': occupation['Developer'],
+        'Occupation_Doctor': occupation['Doctor'],
+        'Occupation_Engineer': occupation['Engineer'],
+        'Occupation_Entrepreneur': occupation['Entrepreneur'],
+        'Occupation_Journalist': occupation['Journalist'],
+        'Occupation_Lawyer': occupation['Lawyer'],
+        'Occupation_Manager': occupation['Manager'],
+        'Occupation_Mechanic': occupation['Mechanic'],
+        'Occupation_Media_Manager': occupation['Media_Manager'],
+        'Occupation_Musician': occupation['Musician'],
+        'Occupation_Scientist': occupation['Scientist'],
+        'Occupation_Teacher': occupation['Teacher'],
+        'Occupation_Writer': occupation['Writer'],
         'Payment_of_Min_Amount_Yes': yes_no('minimum_payment'),
-        'High_spent_Medium_value_payments': payment_behaviour['High_spent_Medium_value_payments'],
-        'High_spent_Small_value_payments': payment_behaviour['High_spent_Small_value_payments'],
-        'Low_spent_Large_value_payments': payment_behaviour['Low_spent_Large_value_payments'],
-        'Low_spent_Medium_value_payments': payment_behaviour['Low_spent_Medium_value_payments'],
-        'Low_spent_Small_value_payments': payment_behaviour['Low_spent_Small_value_payments'],
-        'Doctor': occupation['Doctor'],
-        'Engineer': occupation['Engineer'],
-        'Entrepreneur': occupation['Entrepreneur'],
-        'Journalist': occupation['Journalist'],
-        'Lawyer': occupation['Lawyer'],
-        'Manager': occupation['Manager'],
-        'Mechanic': occupation['Mechanic'],
-        'Media_Manager': occupation['Media_Manager'],
-        'Musician': occupation['Musician'],
-        'Scientist': occupation['Scientist'],
-        'Teacher': occupation['Teacher'],
-        'Writer': occupation['Writer']
 
     }
 
@@ -155,11 +166,20 @@ st.set_page_config(page_title='Credit Score App', page_icon='💰', layout='wide
 # Defining Default values
 age_default = None
 annual_income_default = 0.00
+monthly_inhand_salary_default = 0.00
 accounts_default = 0
 credit_cards_default = 0
+interest_rate_default = 0
+noof_loans_default = 0
+delay_from_due_date_default = 0
 delayed_payments_default = 0
+changed_credit_limit_default = 0
+num_credit_inquiries_default = 0
+outstanding_debt_default = 0.00
 credit_card_ratio_default = 0.00
 emi_monthly_default = 0.00
+amount_invested_monthly_default = 0.00
+monthly_balance_default = 0.00
 credit_history_default = 0
 loans_default = None
 missed_payment_default = 0
@@ -174,23 +194,30 @@ with st.sidebar:
     st.header('Credit Score Prediction Form')
     age = st.slider('What is your age?', min_value=18, max_value=100, step=1, value=age_default)
     annual_income = st.number_input('What is your Annual Income?', min_value=0.00, max_value=300000.00, value=annual_income_default)
+    monthly_inhand_salary = st.number_input('What is your monthly Inhand Salary?', min_value=0.00, max_value=300000.00, value=monthly_inhand_salary_default)
     accounts = st.number_input('How many bank accounts do you have?', min_value=0, max_value=20, step=1, value=accounts_default)
     credit_cards = st.number_input('How many credit cards do you have?', min_value=0, max_value=12, step=1, value=credit_cards_default)
+    interest_rate = st.slider('What is your interest rate?', min_value=2, max_value=100, step=1, value=interest_rate_default)
+    noof_loans = st.number_input('How many loans do you have ?', min_value=0, max_value=10, step=1, value=noof_loans_default)
+    delay_from_due_date = st.number_input('How many days payment is delayed ?', min_value=0, max_value=10, step=1, value=delay_from_due_date_default)
     delayed_payments = st.number_input('How many delayed payments do you have?', min_value=0, max_value=20, step=1, value=delayed_payments_default)
+    changed_credit_limit = st.number_input('what is the change in credit limit?', min_value=0, max_value=40, step=1, value=changed_credit_limit_default)
+    num_credit_inquiries = st.number_input('How many credit inquiries', min_value=0, max_value=5, step=1, value=num_credit_inquiries_default)
+    credit_mix = st.selectbox('What is your Credit Mix?', ['Good','Standard', 'Bad'])
+    outstanding_debt = st.number_input('How much how standing debt you have ?', min_value=0.00, max_value=1500.00, value=outstanding_debt_default)
     credit_card_ratio = st.slider('What is your credit card utilization ratio?', min_value=0.00, max_value=100.00, value=credit_card_ratio_default)
-    emi_monthly = st.number_input('How much EMI do you pay monthly?', min_value=0.00, max_value=5000.00, value=emi_monthly_default)
     credit_history = st.number_input('How many months old is your credit history?', min_value=0, max_value=500, step=1, value=credit_history_default)
+    minimum_payment = st.radio('Have you paid the minimum amount on at least one of your credit cards?', ['Yes', 'No'], index=minimum_payment_default)
+    emi_monthly = st.number_input('How much EMI do you pay monthly?', min_value=0.00, max_value=5000.00, value=emi_monthly_default)
+    amount_invested_monthly = st.number_input('How much amount you invest monthly?', min_value=0.00, max_value=5000.00, value=amount_invested_monthly_default)
+    monthly_balance = st.number_input('How much monthly balance do you have?', min_value=0.00, max_value=5000.00, value=monthly_balance_default)
     loans = st.multiselect('Which loans do you have?', ['Auto Loan', 'Credit-Builder Loan', 'Personal Loan',
                                                 'Home Equity Loan', 'Mortgage Loan', 'Student Loan',
                                                 'Debt Consolidation Loan', 'Payday Loan'], default=loans_default)
-    payment_behaviour = st.multiselect('What is your Payment_Behaviour?', ['High_spent_Medium_value_payments','High_spent_Small_value_payments',
-                                                'Low_spent_Large_value_payments', 'Low_spent_Medium_value_payments',
-                                                'Low_spent_Small_value_payments'], default=payment_behaviour_default)
-
     occupation = st.selectbox('What is your Occupation?', ['Doctor','Engineer', 'Entrepreneur', 'Journalist', 'Lawyer', 'Manager', 'Mechanic', 'Media_Manager', 'Musician', 'Scientist', 'Teacher', 'Writer'])
 
     missed_payment = st.radio('Have you missed any payments in the last 12 months?', ['Yes', 'No'], index=missed_payment_default)
-    minimum_payment = st.radio('Have you paid the minimum amount on at least one of your credit cards?', ['Yes', 'No'], index=minimum_payment_default)
+
 
     run = st.button( 'Predict Credit Score!')
 
@@ -230,18 +257,26 @@ with col1:
         resp = {
             'age': age,
             'annual_income': annual_income,
+            'monthly_inhand_salary': monthly_inhand_salary,
             'accounts': accounts,
             'credit_cards': credit_cards,
+            'interest_rate': interest_rate,
+            'noof_loans': noof_loans,
+            'delay_from_due_date': delay_from_due_date,
             'delayed_payments': delayed_payments,
+            'changed_credit_limit': changed_credit_limit,
+            'num_credit_inquiries': num_credit_inquiries,
+            'credit_mix': credit_mix,
+            'outstanding_debt': outstanding_debt,
             'credit_card_ratio': credit_card_ratio,
-            'emi_monthly': emi_monthly,
             'credit_history': credit_history,
+            'emi_monthly': emi_monthly,
+            'amount_invested_monthly': amount_invested_monthly,
+            'monthly_balance': monthly_balance,\
             'loans': loans,
-            'missed_payment': missed_payment,
-            'minimum_payment': minimum_payment,
-            'payment_behaviour': payment_behaviour,
-            'occupation':occupation
-        }
+            'occupation':occupation,
+            'minimum_payment': minimum_payment
+               }
         output = transform_resp(resp)
         output = pd.DataFrame(output, index=[0])
         output.loc[:,:] = scaler.transform(output)
