@@ -20,7 +20,7 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 scaler = joblib.load('credit_scaler.pkl')
-model = open('credit_model.pkl', 'rb')
+model = pickle.load(open('credit_model.pkl','rb'))
 
 # Transform Input columns
 def transform_resp(resp):
