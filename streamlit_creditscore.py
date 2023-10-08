@@ -262,7 +262,7 @@ with col1:
             'minimum_payment': minimum_payment
                }
         output = transform_resp(resp)
-        preds = model.predict(output)
+        preds = model.predict(resp)
         prediction = str(preds.argmax(axis=1))
         credit_score = prediction[1]
         if credit_score == 2:
