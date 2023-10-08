@@ -103,6 +103,7 @@ def transform_resp(resp):
         'Num_Credit_Card': resp['credit_cards'],
         'Interest_Rate': resp['changed_credit_limit'],
         'Num_of_Loan': resp['noof_loans'],
+        'Delay_from_due_date': resp['delay_from_due_date'],
         'Num_of_Delayed_Payment': resp['delayed_payments'],
         'Changed_Credit_Limit': resp['changed_credit_limit'],
         'Num_Credit_Inquiries': resp['num_credit_inquiries'],
