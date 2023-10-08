@@ -54,21 +54,7 @@ def transform_resp(resp):
             if key_ans in resp['loans']:
                 loans[key_ans] = 1
 
-# CREDIT MIX:
 
-    m = {
-    "Bad":0,
-    "Standard":1,
-    "Good":2,
-          }
-    num_ints = list(map(int, m))
-    print(num_ints)
-    if resp['credit_mix'] == None:
-        credit_mix['Bad'] = None
-        credit_mix['Standard'] = None
-        credit_mix['Good'] = None
-    else:
-        resp['credit_mix'] = resp['credit_mix'].map(num_ints)
 
 # OCCUPATION:
     occupation = {
@@ -172,6 +158,7 @@ delay_from_due_date_default = 0
 delayed_payments_default = 0
 changed_credit_limit_default = 0
 num_credit_inquiries_default = 0
+credit_mix_default = 0.00
 outstanding_debt_default = 0.00
 credit_card_ratio_default = 0.00
 emi_monthly_default = 0.00
@@ -200,7 +187,7 @@ with st.sidebar:
     delayed_payments = st.number_input('How many delayed payments do you have?', min_value=0, max_value=20, step=1, value=delayed_payments_default)
     changed_credit_limit = st.number_input('what is the change in credit limit?', min_value=0, max_value=40, step=1, value=changed_credit_limit_default)
     num_credit_inquiries = st.number_input('How many credit inquiries', min_value=0, max_value=5, step=1, value=num_credit_inquiries_default)
-    credit_mix = st.selectbox('What is your Credit Mix?', ['Good','Standard', 'Bad'])
+    credit_mix = st.number_input('What is your Credit Mix?,pls enter Good:2,Standard:1 Bad:0', min_value=0.00, max_value=2.00, value=credit_mix_default)
     outstanding_debt = st.number_input('How much how standing debt you have ?', min_value=0.00, max_value=1500.00, value=outstanding_debt_default)
     credit_card_ratio = st.slider('What is your credit card utilization ratio?', min_value=0.00, max_value=100.00, value=credit_card_ratio_default)
     credit_history = st.number_input('How many months old is your credit history?', min_value=0, max_value=500, step=1, value=credit_history_default)
