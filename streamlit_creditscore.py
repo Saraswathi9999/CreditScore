@@ -263,6 +263,7 @@ with col1:
                }
         output = transform_resp(resp)
         output = pd.DataFrame(output, index=[0])
+        output = output.reshape(1,41)
         preds = model.predict(output)
         prediction = str(preds.argmax(axis=1))
         credit_score = prediction[1]
