@@ -14,6 +14,7 @@ import joblib
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
+from tensorflow.keras.models import load_model
 
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -256,14 +257,16 @@ with col1:
             'credit_history': credit_history,
             'emi_monthly': emi_monthly,
             'amount_invested_monthly': amount_invested_monthly,
-            'monthly_balance': monthly_balance,\
+            'monthly_balance': monthly_balance,
             'loans': loans,
             'occupation': occupation,
             'minimum_payment': minimum_payment
                }
         output = transform_resp(resp)
         output = pd.DataFrame(output, index=[0])
-        output = output.reshape(1,41)
+        output.loc[:,:] = scaler.transform(output)
+
+
         preds = model.predict(output)
         prediction = str(preds.argmax(axis=1))
         credit_score = prediction[1]
