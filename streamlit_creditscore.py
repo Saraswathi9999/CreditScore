@@ -7,6 +7,10 @@ Original file is located at
     https://colab.research.google.com/drive/1if0ilLf9_pc_rAijgKb12EpkqTohGUXN
 """
 
+pip install keras
+
+pip install tensorflow
+
 import streamlit as st
 import pickle
 import pandas as pd
@@ -15,7 +19,8 @@ import joblib
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
-#import tensorflow as tf
+import tensorflow as tf
+from tensorflow import keras
 
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
