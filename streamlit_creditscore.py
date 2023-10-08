@@ -10,11 +10,11 @@ Original file is located at
 import streamlit as st
 import pickle
 import pandas as pd
+import numpy as np
 import joblib
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
-from tensorflow.keras.models import load_model
 
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -265,8 +265,6 @@ with col1:
         output = transform_resp(resp)
         output = pd.DataFrame(output, index=[0])
         output.loc[:,:] = scaler.transform(output)
-
-
         preds = model.predict(output)
         prediction = str(preds.argmax(axis=1))
         credit_score = prediction[1]
