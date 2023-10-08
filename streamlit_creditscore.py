@@ -199,7 +199,7 @@ with st.sidebar:
                                                 'Debt Consolidation Loan', 'Payday Loan'], default=loans_default)
     occupation = st.selectbox('What is your Occupation?', ['Doctor','Engineer', 'Entrepreneur', 'Journalist', 'Lawyer', 'Manager', 'Mechanic', 'Media_Manager', 'Musician', 'Scientist', 'Teacher', 'Writer'])
 
-    missed_payment = st.radio('Have you missed any payments in the last 12 months?', ['Yes', 'No'], index=missed_payment_default)
+    minimum_payment = st.radio('Have you paid the minimum amount on at least one of your credit cards?', ['Yes', 'No'], index=minimum_payment_default)
 
 
     run = st.button( 'Predict Credit Score!')
@@ -257,7 +257,7 @@ with col1:
             'amount_invested_monthly': amount_invested_monthly,
             'monthly_balance': monthly_balance,\
             'loans': loans,
-            'occupation':occupation,
+            'occupation': occupation,
             'minimum_payment': minimum_payment
                }
         output = transform_resp(resp)
