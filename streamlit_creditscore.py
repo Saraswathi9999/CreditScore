@@ -15,6 +15,7 @@ import joblib
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
+import tensorflow as tf
 
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
