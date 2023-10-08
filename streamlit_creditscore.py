@@ -61,12 +61,14 @@ def transform_resp(resp):
     "Standard":1,
     "Good":2,
           }
+    num_ints = list(map(int, m))
+    print(num_ints)
     if resp['credit_mix'] == None:
         credit_mix['Bad'] = None
         credit_mix['Standard'] = None
         credit_mix['Good'] = None
     else:
-        resp['credit_mix'] = resp['credit_mix'].map(m)
+        resp['credit_mix'] = resp['credit_mix'].map(num_ints)
 
 # OCCUPATION:
     occupation = {
@@ -274,18 +276,21 @@ with col1:
                }
         output = transform_resp(resp)
         output = pd.DataFrame(output, index=[0])
+
         output.loc[:,:] = scaler.transform(output)
-        credit_score = model.predict(output)[0]
-        if credit_score == 1:
+        preds = model.predict(output)
+        prediction = str(preds.argmax(axis=1))
+        credit_score = prediction[1]
+        if credit_score == 2:
             st.balloons()
             t1 = plt.Polygon([[5, 0.5], [5.5, 0], [4.5, 0]], color='black')
             placeholder.markdown('Your credit score is **GOOD**! Congratulations!')
             st.markdown('This credit score indicates that this person is likely to repay a loan, so the risk of giving them credit is low.')
-        elif credit_score == 0:
+        elif credit_score == 1:
             t1 = plt.Polygon([[3, 0.5], [3.5, 0], [2.5, 0]], color='black')
-            placeholder.markdown('Your credit score is **REGULAR**.')
+            placeholder.markdown('Your credit score is **STANDARD**.')
             st.markdown('This credit score indicates that this person is likely to repay a loan, but can occasionally miss some payments. Meaning that the risk of giving them credit is medium.')
-        elif credit_score == -1:
+        elif credit_score == 0:
             t1 = plt.Polygon([[1, 0.5], [1.5, 0], [0.5, 0]], color='black')
             placeholder.markdown('Your credit score is **POOR**.')
             st.markdown('This credit score indicates that this person is unlikely to repay a loan, so the risk of lending them credit is high.')
