@@ -30,14 +30,14 @@ def transform_resp(resp):
             return 0
 # LOANS TYPES
     loans = {
-        'Auto Loan': 0,
         'Credit-Builder Loan': 0,
         'Personal Loan': 0,
-        'Home Equity Loan': 0,
-        'Mortgage Loan': 0,
-        'Student Loan': 0,
         'Debt Consolidation Loan': 0,
-        'Payday Loan': 0
+        'Student Loan': 0,
+        'Payday Loan': 0,
+        'Mortgage Loan': 0,
+        'Auto Loan': 0,
+        'Home Equity Loan': 0
     }
 
     if resp['loans'] == None:
@@ -191,7 +191,6 @@ with st.sidebar:
     outstanding_debt = st.number_input('How much how standing debt you have ?', min_value=0.00, max_value=1500.00, value=outstanding_debt_default)
     credit_card_ratio = st.slider('What is your credit card utilization ratio?', min_value=0.00, max_value=100.00, value=credit_card_ratio_default)
     credit_history = st.number_input('How many months old is your credit history?', min_value=0, max_value=500, step=1, value=credit_history_default)
-    minimum_payment = st.radio('Have you paid the minimum amount on at least one of your credit cards?', ['Yes', 'No'], index=minimum_payment_default)
     emi_monthly = st.number_input('How much EMI do you pay monthly?', min_value=0.00, max_value=5000.00, value=emi_monthly_default)
     amount_invested_monthly = st.number_input('How much amount you invest monthly?', min_value=0.00, max_value=5000.00, value=amount_invested_monthly_default)
     monthly_balance = st.number_input('How much monthly balance do you have?', min_value=0.00, max_value=5000.00, value=monthly_balance_default)
