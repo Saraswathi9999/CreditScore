@@ -15,13 +15,17 @@ import joblib
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
-import tensorflow as tf
+#import tensorflow as tf
 
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 scaler = joblib.load('credit_scaler.pkl')
-model = pickle.load(open('credit_model.pkl','rb'))
+#model = pickle.load(open('credit_model.pkl','rb'))
+pickle_in = open('credit_model.pkl', 'rb')
+model = pickle.load(pickle_in)
+
+#model.summary()
 
 # Transform Input columns
 def transform_resp(resp):
