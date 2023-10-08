@@ -262,9 +262,6 @@ with col1:
             'minimum_payment': minimum_payment
                }
         output = transform_resp(resp)
-        output = pd.DataFrame(output, index=[0])
-
-        output.loc[:,:] = scaler.transform(output)
         preds = model.predict(output)
         prediction = str(preds.argmax(axis=1))
         credit_score = prediction[1]
