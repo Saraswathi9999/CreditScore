@@ -56,7 +56,7 @@ def transform_resp(resp):
 
 # CREDIT MIX:
 
-    credit_mix = {
+    m = {
     "Bad":0,
     "Standard":1,
     "Good":2,
@@ -66,12 +66,7 @@ def transform_resp(resp):
         credit_mix['Standard'] = None
         credit_mix['Good'] = None
     else:
-        for key_ans in credit_mix.keys():
-            if key_ans in resp['credit_mix']:
-                credit_mix[key_ans] = 1
-
-
-    resp['credit_mix'] = resp['credit_mix'].map(credit_mix)
+        resp['credit_mix'] = resp['credit_mix'].map(m)
 
 # OCCUPATION:
     occupation = {
